@@ -1,0 +1,20 @@
+name: CTA Experiments PR CI
+on:
+  pull_request_target:
+    branches: [ "main" ]
+jobs:
+  build:
+    name: Build with Maven
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+      - name: Setup JDK 20
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '20'
+      - name: Build with Maven
+        env:
+          TRAIN_API_KEY: ${{ secrets.TRAIN_API_KEY }}
+        run: mvn -B package --file pom.xml
