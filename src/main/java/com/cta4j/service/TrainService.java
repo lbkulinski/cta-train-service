@@ -1,7 +1,7 @@
 package com.cta4j.service;
 
 import org.springframework.stereotype.Service;
-import com.cta4j.client.StationClient;
+import com.cta4j.client.TrainClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import org.springframework.http.HttpStatus;
 import com.cta4j.model.TrainBody;
 
 @Service
-public final class StationService {
-    private final StationClient client;
+public final class TrainService {
+    private final TrainClient client;
 
     @Autowired
-    public StationService(StationClient client) {
+    public TrainService(TrainClient client) {
         Objects.requireNonNull(client);
 
         this.client = client;
