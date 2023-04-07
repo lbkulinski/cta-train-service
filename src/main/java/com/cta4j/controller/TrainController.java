@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/stations")
-public final class StationController {
+public final class TrainController {
     private final TrainService service;
 
     @Autowired
-    public StationController(TrainService service) {
+    public TrainController(TrainService service) {
         Objects.requireNonNull(service);
 
         this.service = service;
