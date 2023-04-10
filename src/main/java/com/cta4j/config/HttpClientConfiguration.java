@@ -2,7 +2,7 @@ package com.cta4j.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
-import com.cta4j.client.StationClient;
+import com.cta4j.client.TrainClient;
 import org.springframework.beans.factory.annotation.Value;
 import java.util.Objects;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -12,7 +12,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 @Configuration
 public class HttpClientConfiguration {
     @Bean
-    public StationClient trainClient(@Value("${TRAIN_API_KEY}") String apiKey) {
+    public TrainClient trainClient(@Value("${TRAIN_API_KEY}") String apiKey) {
         Objects.requireNonNull(apiKey);
 
         String baseUrl = """
@@ -25,6 +25,6 @@ public class HttpClientConfiguration {
         HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory.builder(webClientAdapter)
                                                                                  .build();
 
-        return httpServiceProxyFactory.createClient(StationClient.class);
+        return httpServiceProxyFactory.createClient(TrainClient.class);
     }
 }

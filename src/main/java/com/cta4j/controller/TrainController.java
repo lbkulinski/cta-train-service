@@ -2,7 +2,7 @@ package com.cta4j.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.cta4j.service.StationService;
+import com.cta4j.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/stations")
-public final class StationController {
-    private final StationService service;
+public final class TrainController {
+    private final TrainService service;
 
     @Autowired
-    public StationController(StationService service) {
+    public TrainController(TrainService service) {
         Objects.requireNonNull(service);
 
         this.service = service;
