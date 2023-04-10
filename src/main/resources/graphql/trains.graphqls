@@ -1,0 +1,26 @@
+enum Route {
+    RED
+    BLUE
+    BROWN
+    GREEN
+    ORANGE
+    PURPLE
+    PINK
+    YELLOW
+}
+
+type Train {
+    run: Int!
+    route: Route
+    destination: String
+    station: String
+    predictionTime: String
+    arrivalTime: String
+    due: Boolean!
+    scheduled: Boolean!
+    delayed: Boolean!
+}
+
+type Query {
+    readTrains(stationId: Int!): [Train]
+}
