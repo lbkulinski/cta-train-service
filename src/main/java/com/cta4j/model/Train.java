@@ -1,12 +1,10 @@
 package com.cta4j.model;
 
-import com.cta4j.serialization.StringToInstantConverter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonAlias;
-
-import java.time.Instant;
-import java.time.LocalDateTime;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.cta4j.serialization.StringToInstantConverter;
+import java.time.Instant;
 import com.cta4j.serialization.StringToBooleanConverter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

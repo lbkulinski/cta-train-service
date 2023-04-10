@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.http.ResponseEntity;
-import java.util.List;
+import java.util.Set;
+import com.cta4j.model.Station;
 import com.cta4j.model.Train;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,8 +24,13 @@ public final class TrainController {
         this.service = service;
     }
 
+    @GetMapping
+    public ResponseEntity<Set<Station>> readStations() {
+        return this.service.readStations();
+    }
+
     @GetMapping("/{stationId}/trains")
-    public ResponseEntity<List<Train>> readTrains(@PathVariable int stationId) {
+    public ResponseEntity<Set<Train>> readTrains(@PathVariable int stationId) {
         return this.service.readTrains(stationId);
     }
 }
