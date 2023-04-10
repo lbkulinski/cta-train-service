@@ -23,13 +23,13 @@ public final class TrainService {
         this.client = client;
     }
 
-    public ResponseEntity<List<Train>> readTrains(int mapId) {
-        if (mapId <= 0) {
+    public ResponseEntity<List<Train>> readTrains(int stationId) {
+        if (stationId <= 0) {
             return ResponseEntity.badRequest()
                                  .build();
         }
 
-        ResponseEntity<TrainResponse> responseEntity = this.client.getTrains(mapId);
+        ResponseEntity<TrainResponse> responseEntity = this.client.getTrains(stationId);
 
         HttpStatusCode statusCode = responseEntity.getStatusCode();
 
