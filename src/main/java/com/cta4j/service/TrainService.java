@@ -1,5 +1,7 @@
 package com.cta4j.service;
 
+import com.cta4j.exception.TrainException;
+import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
 import com.cta4j.client.TrainClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,41 +25,47 @@ public final class TrainService {
         this.client = client;
     }
 
-    public ResponseEntity<List<Train>> readTrains(int mapId) {
-        if (mapId <= 0) {
-            return ResponseEntity.badRequest()
-                                 .build();
+    public List<Train> readTrains(int stationId) {
+        if (stationId <= 0) {
+            String message = "The specified station ID must be positive";
+
+            throw new TrainException(message, ErrorType.BAD_REQUEST);
         }
 
-        ResponseEntity<TrainResponse> responseEntity = this.client.getTrains(mapId);
+        ResponseEntity<TrainResponse> responseEntity = this.client.getTrains(stationId);
 
         HttpStatusCode statusCode = responseEntity.getStatusCode();
 
         if ((statusCode != HttpStatus.OK) || !responseEntity.hasBody()) {
-            return ResponseEntity.internalServerError()
-                                 .build();
+            String message = "The response from the CTA's train API is malformed";
+
+            throw new TrainException(message, ErrorType.INTERNAL_ERROR);
         }
 
         TrainResponse response = responseEntity.getBody();
 
         if (response == null) {
-            return ResponseEntity.internalServerError()
-                                 .build();
+            String message = "The response from the CTA's train API is malformed";
+
+            throw new TrainException(message, ErrorType.INTERNAL_ERROR);
         }
 
         TrainBody body = response.body();
 
         if (body == null) {
-            return ResponseEntity.internalServerError()
-                                 .build();
+            String message = "The response from the CTA's train API is malformed";
+
+            throw new TrainException(message, ErrorType.INTERNAL_ERROR);
         }
 
         List<Train> trains = body.trains();
 
         if (trains == null) {
-            trains = List.of();
+            String message = "The response from the CTA's train API is malformed";
+
+            throw new TrainException(message, ErrorType.INTERNAL_ERROR);
         }
 
-        return ResponseEntity.ok(trains);
+        return trains;
     }
 }
