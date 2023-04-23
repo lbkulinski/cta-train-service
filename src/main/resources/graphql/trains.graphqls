@@ -22,5 +22,5 @@ type Train {
 }
 
 type Query {
-    readTrains(stationId: Int!): [Train]
+    getTrains(stationId: Int!): [Train]
 }
