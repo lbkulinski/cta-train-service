@@ -1,3 +1,8 @@
+type Station {
+    id: Int!,
+    name: String
+}
+
 enum Route {
     RED
     BLUE
@@ -22,5 +27,6 @@ type Train {
 }
 
 type Query {
+    getStations: [Station]
     getTrains(stationId: Int!): [Train]
 }

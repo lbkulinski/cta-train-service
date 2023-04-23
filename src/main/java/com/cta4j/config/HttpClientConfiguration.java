@@ -27,7 +27,7 @@ public class HttpClientConfiguration {
     }
 
     @Bean
-    public TrainClient trainClient(@Value("${TRAIN_API_KEY}") String apiKey) {
+    public TrainClient trainClient(@Value("${cta.train-api-key}") String apiKey) {
         Objects.requireNonNull(apiKey);
 
         String baseUrl = """

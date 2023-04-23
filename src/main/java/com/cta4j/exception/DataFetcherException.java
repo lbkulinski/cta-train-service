@@ -1,11 +1,10 @@
 package com.cta4j.exception;
 
-import graphql.ErrorClassification;
 import graphql.GraphQLError;
-import graphql.language.SourceLocation;
-
-import java.util.List;
+import graphql.ErrorClassification;
 import java.util.Objects;
+import java.util.List;
+import graphql.language.SourceLocation;
 
 public class DataFetcherException extends RuntimeException implements GraphQLError {
     private final ErrorClassification errorType;

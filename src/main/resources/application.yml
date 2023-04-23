@@ -2,3 +2,5 @@ spring:
   graphql:
     graphiql:
       enabled: true
+cta:
+  train-api-key: ${TRAIN_API_KEY}

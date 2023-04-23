@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import java.util.Set;
-
+import com.cta4j.model.Station;
 import com.cta4j.model.Train;
 import org.springframework.graphql.data.method.annotation.Argument;
 
@@ -19,6 +19,11 @@ public final class TrainController {
         Objects.requireNonNull(service);
 
         this.service = service;
+    }
+
+    @QueryMapping
+    public Set<Station> getStations() {
+        return this.service.getStations();
     }
 
     @QueryMapping

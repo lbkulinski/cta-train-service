@@ -1,29 +1,54 @@
 package com.cta4j.service;
 
-import com.cta4j.exception.DataFetcherException;
-import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
+import com.cta4j.client.StationClient;
 import com.cta4j.client.TrainClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Objects;
-import org.springframework.http.ResponseEntity;
 import java.util.Set;
-
-import com.cta4j.model.Train;
-import com.cta4j.model.TrainResponse;
+import com.cta4j.model.Station;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.HttpStatus;
+import com.cta4j.exception.DataFetcherException;
+import org.springframework.graphql.execution.ErrorType;
+import com.cta4j.model.Train;
+import com.cta4j.model.TrainResponse;
 import com.cta4j.model.TrainBody;
 
 @Service
 public final class TrainService {
-    private final TrainClient client;
+    private final StationClient stationClient;
+
+    private final TrainClient trainClient;
 
     @Autowired
-    public TrainService(TrainClient client) {
-        Objects.requireNonNull(client);
+    public TrainService(StationClient stationClient, TrainClient trainClient) {
+        Objects.requireNonNull(stationClient);
 
-        this.client = client;
+        Objects.requireNonNull(trainClient);
+
+        this.stationClient = stationClient;
+
+        this.trainClient = trainClient;
+    }
+
+    public Set<Station> getStations() {
+        ResponseEntity<Set<Station>> responseEntity = this.stationClient.getStations();
+
+        HttpStatusCode statusCode = responseEntity.getStatusCode();
+
+        if ((statusCode != HttpStatus.OK) || !responseEntity.hasBody()) {
+            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
+        }
+
+        Set<Station> stations = responseEntity.getBody();
+
+        if (stations == null) {
+            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
+        }
+
+        return stations;
     }
 
     public Set<Train> getTrains(int stationId) {
@@ -33,7 +58,7 @@ public final class TrainService {
             throw new DataFetcherException(message, ErrorType.BAD_REQUEST);
         }
 
-        ResponseEntity<TrainResponse> responseEntity = this.client.getTrains(stationId);
+        ResponseEntity<TrainResponse> responseEntity = this.trainClient.getTrains(stationId);
 
         HttpStatusCode statusCode = responseEntity.getStatusCode();
 
