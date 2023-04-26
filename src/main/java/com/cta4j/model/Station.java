@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Station(
-    @JsonAlias("stop_id")
+    @JsonAlias("map_id")
     int id,
 
     @JsonAlias("station_descriptive_name")
