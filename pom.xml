@@ -45,10 +45,9 @@
             <version>2.15.0</version>
         </dependency>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-resolver-dns-native-macos</artifactId>
-            <version>4.1.92.Final</version>
-            <classifier>osx-aarch_64</classifier>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-reactive-httpclient</artifactId>
+            <version>3.0.8</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
