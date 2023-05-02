@@ -2,8 +2,6 @@ spring:
   graphql:
     graphiql:
       enabled: true
-    cors:
-      allowed-origins: '*'
 cta:
   train-api-key: ${TRAIN_API_KEY}
 rollbar:
