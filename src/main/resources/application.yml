@@ -4,3 +4,6 @@ spring:
       enabled: true
 cta:
   train-api-key: ${TRAIN_API_KEY}
+rollbar:
+  access-token: ${ROLLBAR_ACCESS_TOKEN}
+  environment: ${ROLLBAR_ENVIRONMENT}
