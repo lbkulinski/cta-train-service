@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cta4j</groupId>
-    <artifactId>cta-experiments</artifactId>
+    <artifactId>cta-train-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>cta-experiments</name>
     <description>cta-experiments</description>
@@ -54,11 +54,6 @@
             <artifactId>netty-resolver-dns-native-macos</artifactId>
             <version>4.1.92.Final</version>
             <classifier>osx-aarch_64</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.rollbar</groupId>
-            <artifactId>rollbar-spring-boot3-webmvc</artifactId>
-            <version>1.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
