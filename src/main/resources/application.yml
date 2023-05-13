@@ -7,6 +7,3 @@ spring:
         - ${FRONT_END_URL}
 cta:
   train-api-key: ${TRAIN_API_KEY}
-rollbar:
-  access-token: ${ROLLBAR_ACCESS_TOKEN}
-  environment: ${ROLLBAR_ENVIRONMENT}
