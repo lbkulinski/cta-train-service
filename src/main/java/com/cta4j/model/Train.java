@@ -13,7 +13,7 @@ public record Train(
     int run,
 
     @JsonAlias("rt")
-    Route route,
+    Line line,
 
     @JsonAlias("destNm")
     String destination,
