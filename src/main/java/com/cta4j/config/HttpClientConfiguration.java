@@ -1,5 +1,6 @@
 package com.cta4j.config;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import com.cta4j.client.StationClient;
@@ -14,6 +15,7 @@ import org.springframework.http.client.reactive.ClientHttpConnector;
 import org.springframework.http.client.reactive.JettyClientHttpConnector;
 
 @Configuration
+@NullMarked
 public class HttpClientConfiguration {
     @Bean
     public StationClient stationClient() {

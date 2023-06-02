@@ -5,11 +5,14 @@ import graphql.ErrorClassification;
 import java.util.Objects;
 import java.util.List;
 import graphql.language.SourceLocation;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public class DataFetcherException extends RuntimeException implements GraphQLError {
     private final ErrorClassification errorType;
 
-    public DataFetcherException(String message, ErrorClassification errorType) {
+    public DataFetcherException(@Nullable String message, ErrorClassification errorType) {
         super(message);
 
         Objects.requireNonNull(errorType);
@@ -27,7 +30,7 @@ public class DataFetcherException extends RuntimeException implements GraphQLErr
     }
 
     @Override
-    public List<SourceLocation> getLocations() {
+    public @Nullable List<SourceLocation> getLocations() {
         return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.cta4j.service;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.stereotype.Service;
 import com.cta4j.client.StationClient;
 import com.cta4j.client.TrainClient;
@@ -17,6 +18,7 @@ import com.cta4j.model.TrainResponse;
 import com.cta4j.model.TrainBody;
 
 @Service
+@NullMarked
 public final class TrainService {
     private final StationClient stationClient;
 

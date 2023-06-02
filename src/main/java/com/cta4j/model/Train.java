@@ -5,8 +5,12 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.cta4j.serialization.StringToInstantConverter;
 import java.time.Instant;
-import com.cta4j.serialization.StringToBooleanConverter;
+import java.util.Objects;
 
+import com.cta4j.serialization.StringToBooleanConverter;
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Train(
     @JsonAlias("rn")
@@ -41,4 +45,15 @@ public record Train(
     @JsonDeserialize(converter = StringToBooleanConverter.class)
     boolean delayed
 ) {
+    public Train {
+        Objects.requireNonNull(line);
+
+        Objects.requireNonNull(destination);
+
+        Objects.requireNonNull(station);
+
+        Objects.requireNonNull(predictionTime);
+
+        Objects.requireNonNull(arrivalTime);
+    }
 }

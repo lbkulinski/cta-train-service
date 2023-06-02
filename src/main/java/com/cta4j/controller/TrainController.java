@@ -1,5 +1,6 @@
 package com.cta4j.controller;
 
+import org.jspecify.annotations.NullMarked;
 import org.springframework.stereotype.Controller;
 import com.cta4j.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.cta4j.model.Train;
 import org.springframework.graphql.data.method.annotation.Argument;
 
 @Controller
+@NullMarked
 public final class TrainController {
     private final TrainService service;
 

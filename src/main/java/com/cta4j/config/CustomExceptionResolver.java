@@ -1,5 +1,7 @@
 package com.cta4j.config;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import graphql.GraphQLError;
@@ -14,9 +16,10 @@ import org.springframework.validation.BindException;
 import org.springframework.graphql.execution.ErrorType;
 
 @Component
+@NullMarked
 public final class CustomExceptionResolver extends DataFetcherExceptionResolverAdapter {
     @Override
-    protected GraphQLError resolveToSingleError(@NonNull Throwable throwable,
+    protected @Nullable GraphQLError resolveToSingleError(@NonNull Throwable throwable,
         @NonNull DataFetchingEnvironment environment) {
         if (throwable instanceof DataFetcherException exception) {
             ErrorClassification errorType = exception.getErrorType();

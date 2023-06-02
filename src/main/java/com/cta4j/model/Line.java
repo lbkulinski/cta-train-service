@@ -1,8 +1,11 @@
 package com.cta4j.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import org.jspecify.annotations.NullMarked;
+
 import java.util.Objects;
 
+@NullMarked
 public enum Line {
     RED,
 
