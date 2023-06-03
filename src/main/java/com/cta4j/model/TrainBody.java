@@ -5,8 +5,5 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record TrainBody(
-    @JsonAlias("eta")
-    Set<Train> trains
-) {
+public record TrainBody(@JsonAlias("eta") Set<Train> trains) {
 }

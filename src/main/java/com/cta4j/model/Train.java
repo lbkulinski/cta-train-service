@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.cta4j.serialization.StringToInstantConverter;
 import java.time.Instant;
 import com.cta4j.serialization.StringToBooleanConverter;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Train(
@@ -41,4 +42,15 @@ public record Train(
     @JsonDeserialize(converter = StringToBooleanConverter.class)
     boolean delayed
 ) {
+    public Train {
+        Objects.requireNonNull(line);
+
+        Objects.requireNonNull(destination);
+
+        Objects.requireNonNull(station);
+
+        Objects.requireNonNull(predictionTime);
+
+        Objects.requireNonNull(arrivalTime);
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter
 import graphql.GraphQLError;
 import org.springframework.lang.NonNull;
 import graphql.schema.DataFetchingEnvironment;
+import java.util.Objects;
 import com.cta4j.exception.DataFetcherException;
 import graphql.ErrorClassification;
 import graphql.execution.ResultPath;
@@ -18,6 +19,10 @@ public final class CustomExceptionResolver extends DataFetcherExceptionResolverA
     @Override
     protected GraphQLError resolveToSingleError(@NonNull Throwable throwable,
         @NonNull DataFetchingEnvironment environment) {
+        Objects.requireNonNull(throwable);
+
+        Objects.requireNonNull(environment);
+
         if (throwable instanceof DataFetcherException exception) {
             ErrorClassification errorType = exception.getErrorType();
 
