@@ -2,6 +2,7 @@ package com.cta4j.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record Station(
@@ -11,4 +12,7 @@ public record Station(
     @JsonAlias("station_descriptive_name")
     String name
 ) {
+    public Station {
+        Objects.requireNonNull(name);
+    }
 }
