@@ -1,11 +1,11 @@
 package com.cta4j.client;
 
-import org.springframework.web.service.annotation.GetExchange;
-import org.springframework.http.ResponseEntity;
-import java.util.Set;
 import com.cta4j.model.Station;
+import org.springframework.web.service.annotation.GetExchange;
+
+import java.util.Set;
 
 public interface StationClient {
     @GetExchange
-    ResponseEntity<Set<Station>> getStations();
+    Set<Station> getStations();
 }

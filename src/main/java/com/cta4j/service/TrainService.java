@@ -1,20 +1,22 @@
 package com.cta4j.service;
 
-import org.springframework.stereotype.Service;
 import com.cta4j.client.StationClient;
 import com.cta4j.client.TrainClient;
+import com.cta4j.exception.DataFetcherException;
+import com.cta4j.model.Station;
+import com.cta4j.model.Train;
+import com.cta4j.model.TrainBody;
+import com.cta4j.model.TrainResponse;
+import com.rollbar.notifier.Rollbar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.execution.ErrorType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClientException;
+
 import java.util.Objects;
 import java.util.Set;
-import com.cta4j.model.Station;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.HttpStatus;
-import com.cta4j.exception.DataFetcherException;
-import org.springframework.graphql.execution.ErrorType;
-import com.cta4j.model.Train;
-import com.cta4j.model.TrainResponse;
-import com.cta4j.model.TrainBody;
 
 @Service
 public final class TrainService {
@@ -22,27 +24,43 @@ public final class TrainService {
 
     private final TrainClient trainClient;
 
+    private final Rollbar rollbar;
+
+    private static final Logger LOGGER;
+
+    static {
+        LOGGER = LoggerFactory.getLogger(TrainService.class);
+    }
+
     @Autowired
-    public TrainService(StationClient stationClient, TrainClient trainClient) {
+    public TrainService(StationClient stationClient, TrainClient trainClient, Rollbar rollbar) {
         Objects.requireNonNull(stationClient);
 
         Objects.requireNonNull(trainClient);
 
+        Objects.requireNonNull(rollbar);
+
         this.stationClient = stationClient;
 
         this.trainClient = trainClient;
+
+        this.rollbar = rollbar;
     }
 
     public Set<Station> getStations() {
-        ResponseEntity<Set<Station>> responseEntity = this.stationClient.getStations();
+        Set<Station> stations;
 
-        HttpStatusCode statusCode = responseEntity.getStatusCode();
+        try {
+            stations = this.stationClient.getStations();
+        } catch (WebClientException e) {
+            this.rollbar.error(e);
 
-        if ((statusCode != HttpStatus.OK) || !responseEntity.hasBody()) {
+            String message = e.getMessage();
+
+            TrainService.LOGGER.error(message, e);
+
             throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
         }
-
-        Set<Station> stations = responseEntity.getBody();
 
         if (stations == null) {
             throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
@@ -58,15 +76,19 @@ public final class TrainService {
             throw new DataFetcherException(message, ErrorType.BAD_REQUEST);
         }
 
-        ResponseEntity<TrainResponse> responseEntity = this.trainClient.getTrains(stationId);
+        TrainResponse response;
 
-        HttpStatusCode statusCode = responseEntity.getStatusCode();
+        try {
+            response = this.trainClient.getTrains(stationId);
+        } catch (WebClientException e) {
+            this.rollbar.error(e);
 
-        if ((statusCode != HttpStatus.OK) || !responseEntity.hasBody()) {
+            String message = e.getMessage();
+
+            TrainService.LOGGER.error(message, e);
+
             throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
         }
-
-        TrainResponse response = responseEntity.getBody();
 
         if (response == null) {
             throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
