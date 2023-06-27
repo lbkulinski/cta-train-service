@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClientException;
 
 import java.util.Objects;
 import java.util.Set;
@@ -52,7 +51,7 @@ public final class TrainService {
 
         try {
             stations = this.stationClient.getStations();
-        } catch (WebClientException e) {
+        } catch (Exception e) {
             this.rollbar.error(e);
 
             String message = e.getMessage();
@@ -80,7 +79,7 @@ public final class TrainService {
 
         try {
             response = this.trainClient.getTrains(stationId);
-        } catch (WebClientException e) {
+        } catch (Exception e) {
             this.rollbar.error(e);
 
             String message = e.getMessage();
