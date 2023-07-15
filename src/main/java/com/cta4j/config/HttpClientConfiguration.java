@@ -2,7 +2,6 @@ package com.cta4j.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
-import com.cta4j.client.StationClient;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.support.WebClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
@@ -15,20 +14,6 @@ import org.springframework.http.client.reactive.JettyClientHttpConnector;
 
 @Configuration
 public class HttpClientConfiguration {
-    @Bean
-    public StationClient stationClient() {
-        String baseUrl = "https://data.cityofchicago.org/resource/8pix-ypme.json";
-
-        WebClient webClient = WebClient.create(baseUrl);
-
-        WebClientAdapter webClientAdapter = WebClientAdapter.forClient(webClient);
-
-        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory.builder(webClientAdapter)
-                                                                                 .build();
-
-        return httpServiceProxyFactory.createClient(StationClient.class);
-    }
-
     @Bean
     public TrainClient trainClient(@Value("${cta.train-api-key}") String apiKey) {
         Objects.requireNonNull(apiKey);

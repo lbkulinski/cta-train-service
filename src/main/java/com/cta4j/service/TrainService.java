@@ -1,25 +1,28 @@
 package com.cta4j.service;
 
-import com.cta4j.client.StationClient;
 import com.cta4j.client.TrainClient;
 import com.cta4j.exception.DataFetcherException;
+import com.cta4j.jooq.Tables;
 import com.cta4j.model.Station;
 import com.cta4j.model.Train;
 import com.cta4j.model.TrainBody;
 import com.cta4j.model.TrainResponse;
 import com.rollbar.notifier.Rollbar;
+import org.jooq.DSLContext;
+import org.jooq.exception.DataAccessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Service
 public final class TrainService {
-    private final StationClient stationClient;
+    private final DSLContext context;
 
     private final TrainClient trainClient;
 
@@ -32,14 +35,14 @@ public final class TrainService {
     }
 
     @Autowired
-    public TrainService(StationClient stationClient, TrainClient trainClient, Rollbar rollbar) {
-        Objects.requireNonNull(stationClient);
+    public TrainService(DSLContext context, TrainClient trainClient, Rollbar rollbar) {
+        Objects.requireNonNull(context);
 
         Objects.requireNonNull(trainClient);
 
         Objects.requireNonNull(rollbar);
 
-        this.stationClient = stationClient;
+        this.context = context;
 
         this.trainClient = trainClient;
 
@@ -47,11 +50,13 @@ public final class TrainService {
     }
 
     public Set<Station> getStations() {
-        Set<Station> stations;
+        List<Station> stations;
 
         try {
-            stations = this.stationClient.getStations();
-        } catch (Exception e) {
+            stations = this.context.select(Tables.STATION.ID, Tables.STATION.NAME)
+                                   .from(Tables.STATION)
+                                   .fetchInto(Station.class);
+        } catch (DataAccessException e) {
             this.rollbar.error(e);
 
             String message = e.getMessage();
@@ -61,11 +66,7 @@ public final class TrainService {
             throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
         }
 
-        if (stations == null) {
-            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
-        }
-
-        return stations;
+        return Set.copyOf(stations);
     }
 
     public Set<Train> getTrains(int stationId) {
