@@ -7,18 +7,10 @@ spring:
   jooq:
     sql-dialect: ${JOOQ_SQL_DIALECT}
   graphql:
-    graphiql:
-      enabled: true
-    schema:
-      printer:
-        enabled: true
     cors:
       allowed-origins:
         - https://studio.apollographql.com #remove if you are not using Apollo Studio
         - ${FRONT_END_URL}
-      allowed-methods: "*"
-    websocket:
-      path: /graphql
 cta:
   train-api-key: ${TRAIN_API_KEY}
 rollbar:
