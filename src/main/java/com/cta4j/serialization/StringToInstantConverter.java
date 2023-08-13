@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.time.ZoneId;
 import java.time.LocalDateTime;
 
-
 public final class StringToInstantConverter extends StdConverter<String, Instant> {
     @Override
     public Instant convert(String string) {

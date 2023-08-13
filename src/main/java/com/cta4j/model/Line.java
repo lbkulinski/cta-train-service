@@ -27,14 +27,14 @@ public enum Line {
         string = string.toUpperCase();
 
         return switch (string) {
-            case "RED" -> Line.RED;
-            case "BLUE" -> Line.BLUE;
-            case "BRN" -> Line.BROWN;
-            case "G" -> Line.GREEN;
-            case "ORG" -> Line.ORANGE;
-            case "P" -> Line.PURPLE;
-            case "PINK" -> Line.PINK;
-            case "Y" -> Line.YELLOW;
+            case "RED", "RED LINE" -> Line.RED;
+            case "BLUE", "BLUE LINE" -> Line.BLUE;
+            case "BRN", "BROWN LINE" -> Line.BROWN;
+            case "G", "GREEN LINE" -> Line.GREEN;
+            case "ORG", "ORANGE LINE" -> Line.ORANGE;
+            case "P", "PURPLE LINE" -> Line.PURPLE;
+            case "PINK", "PINK LINE" -> Line.PINK;
+            case "Y", "YELLOW LINE" -> Line.YELLOW;
             default -> {
                 String message = "A line with the name \"%s\" does not exist".formatted(string);
 

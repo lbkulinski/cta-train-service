@@ -29,4 +29,5 @@ type Train {
 type Query {
     getStations: [Station!]!
     getTrains(stationId: ID!): [Train!]!
+    followTrain(run: Int!): [Train!]!
 }

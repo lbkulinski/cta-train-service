@@ -3,10 +3,7 @@ package com.cta4j.service;
 import com.cta4j.client.TrainClient;
 import com.cta4j.exception.DataFetcherException;
 import com.cta4j.jooq.Tables;
-import com.cta4j.model.Station;
-import com.cta4j.model.Train;
-import com.cta4j.model.TrainBody;
-import com.cta4j.model.TrainResponse;
+import com.cta4j.model.*;
 import com.rollbar.notifier.Rollbar;
 import org.jooq.DSLContext;
 import org.jooq.exception.DataAccessException;
@@ -108,6 +105,48 @@ public final class TrainService {
             throw new DataFetcherException(message, ErrorType.NOT_FOUND);
         }
 
-        return trains;
+        return Set.copyOf(trains);
+    }
+
+    public Set<Train> followTrain(int run) {
+        if (run <= 0) {
+            String message = "The specified run must be positive";
+
+            throw new DataFetcherException(message, ErrorType.BAD_REQUEST);
+        }
+
+        FollowResponse response;
+
+        try {
+            response = this.trainClient.followTrain(run);
+        } catch (Exception e) {
+            this.rollbar.error(e);
+
+            String message = e.getMessage();
+
+            TrainService.LOGGER.error(message, e);
+
+            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
+        }
+
+        if (response == null) {
+            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
+        }
+
+        FollowBody body = response.body();
+
+        if (body == null) {
+            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
+        }
+
+        Set<Train> trains = body.trains();
+
+        if (trains == null) {
+            String message = "A train with the specified run could not be found";
+
+            throw new DataFetcherException(message, ErrorType.NOT_FOUND);
+        }
+
+        return Set.copyOf(trains);
     }
 }
