@@ -7,8 +7,6 @@ spring:
   jooq:
     sql-dialect: ${JOOQ_SQL_DIALECT}
   graphql:
-    graphiql:
-      enabled: false
     cors:
       allowed-origins:
         - https://studio.apollographql.com #remove if you are not using Apollo Studio
@@ -18,3 +16,10 @@ cta:
 rollbar:
   access-token: ${ROLLBAR_ACCESS_TOKEN}
   environment: ${ROLLBAR_ENVIRONMENT}
+
+logging:
+  level:
+    org.springframework.web: debug
+    org.springframework.http: debug
+    org.springframework.graphql: debug
+    reactor.netty: debug

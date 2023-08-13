@@ -19,7 +19,7 @@ public class HttpClientConfiguration {
         Objects.requireNonNull(apiKey);
 
         String baseUrl = """
-        https://lapi.transitchicago.com/api/1.0/ttarrivals.aspx?key=%s&outputType=json""".formatted(apiKey);
+        https://lapi.transitchicago.com/api/1.0?key=%s&outputType=json""".formatted(apiKey);
 
         HttpClient httpClient = new HttpClient();
 

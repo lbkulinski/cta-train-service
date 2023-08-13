@@ -30,4 +30,9 @@ public final class TrainController {
     public Set<Train> getTrains(@Argument int stationId) {
         return this.service.getTrains(stationId);
     }
+
+    @QueryMapping
+    public Set<Train> followTrain(@Argument int run) {
+        return this.service.followTrain(run);
+    }
 }
