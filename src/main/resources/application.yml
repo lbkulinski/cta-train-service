@@ -16,10 +16,3 @@ cta:
 rollbar:
   access-token: ${ROLLBAR_ACCESS_TOKEN}
   environment: ${ROLLBAR_ENVIRONMENT}
-
-logging:
-  level:
-    org.springframework.web: debug
-    org.springframework.http: debug
-    org.springframework.graphql: debug
-    reactor.netty: debug
