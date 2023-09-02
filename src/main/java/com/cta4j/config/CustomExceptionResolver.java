@@ -1,18 +1,19 @@
 package com.cta4j.config;
 
-import org.springframework.stereotype.Component;
-import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
-import graphql.GraphQLError;
-import org.springframework.lang.NonNull;
-import graphql.schema.DataFetchingEnvironment;
-import java.util.Objects;
 import com.cta4j.exception.DataFetcherException;
 import graphql.ErrorClassification;
+import graphql.GraphQLError;
+import graphql.GraphqlErrorBuilder;
 import graphql.execution.ResultPath;
 import graphql.language.SourceLocation;
-import graphql.GraphqlErrorBuilder;
-import org.springframework.validation.BindException;
+import graphql.schema.DataFetchingEnvironment;
+import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.graphql.execution.ErrorType;
+import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindException;
+
+import java.util.Objects;
 
 @Component
 public final class CustomExceptionResolver extends DataFetcherExceptionResolverAdapter {

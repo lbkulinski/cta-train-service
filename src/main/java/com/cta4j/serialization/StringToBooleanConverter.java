@@ -1,6 +1,7 @@
 package com.cta4j.serialization;
 
 import com.fasterxml.jackson.databind.util.StdConverter;
+
 import java.util.Objects;
 
 public final class StringToBooleanConverter extends StdConverter<String, Boolean> {

@@ -1,14 +1,15 @@
 package com.cta4j.controller;
 
-import org.springframework.stereotype.Controller;
-import com.cta4j.service.TrainService;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Objects;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
-import java.util.Set;
 import com.cta4j.model.Station;
 import com.cta4j.model.Train;
+import com.cta4j.service.TrainService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
+
+import java.util.Objects;
+import java.util.Set;
 
 @Controller
 public final class TrainController {
