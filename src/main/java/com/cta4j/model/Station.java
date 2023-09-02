@@ -1,7 +1,8 @@
 package com.cta4j.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)

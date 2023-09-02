@@ -1,10 +1,11 @@
 package com.cta4j.serialization;
 
 import com.fasterxml.jackson.databind.util.StdConverter;
+
 import java.time.Instant;
-import java.util.Objects;
-import java.time.ZoneId;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Objects;
 
 public final class StringToInstantConverter extends StdConverter<String, Instant> {
     @Override
