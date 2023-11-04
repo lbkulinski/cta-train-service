@@ -12,7 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -66,46 +69,31 @@ public final class TrainService {
         return Set.copyOf(stations);
     }
 
-    public Set<Train> getTrains(int stationId) {
-        if (stationId <= 0) {
-            String message = "The specified station ID must be positive";
+    public Flux<Set<Train>> getTrains(int stationId) {
+        Duration delay = Duration.ofSeconds(0L);
 
-            throw new DataFetcherException(message, ErrorType.BAD_REQUEST);
-        }
+        Duration period = Duration.ofMinutes(1L);
 
-        TrainResponse response;
+        return Flux.interval(delay, period)
+                   .flatMap(i -> {
+                          Mono<TrainResponse> response;
 
-        try {
-            response = this.trainClient.getTrains(stationId);
-        } catch (Exception e) {
-            this.rollbar.error(e);
+                          try {
+                              response = this.trainClient.getTrains(stationId);
+                          } catch (Exception e) {
+                              this.rollbar.error(e);
 
-            String message = e.getMessage();
+                              String message = e.getMessage();
 
-            TrainService.LOGGER.error(message, e);
+                              TrainService.LOGGER.error(message, e);
 
-            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
-        }
+                              return Flux.error(e);
+                          }
 
-        if (response == null) {
-            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
-        }
-
-        TrainBody body = response.body();
-
-        if (body == null) {
-            throw new DataFetcherException(ErrorType.INTERNAL_ERROR);
-        }
-
-        Set<Train> trains = body.trains();
-
-        if (trains == null) {
-            String message = "Trains with the specified station ID could not be found";
-
-            throw new DataFetcherException(message, ErrorType.NOT_FOUND);
-        }
-
-        return Set.copyOf(trains);
+                          return Flux.from(response);
+                   })
+                   .mapNotNull(TrainResponse::body)
+                   .mapNotNull(TrainBody::trains);
     }
 
     public Set<Train> followTrain(int run) {
