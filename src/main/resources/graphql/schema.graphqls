@@ -31,3 +31,7 @@ type Query {
     getTrains(stationId: ID!): [Train!]!
     followTrain(run: Int!): [Train!]!
 }
+
+type Subscription {
+    subscribeToNewTrains(stationId: ID!): [Train!]!
+}
