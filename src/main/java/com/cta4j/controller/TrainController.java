@@ -6,9 +6,7 @@ import com.cta4j.service.TrainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
-import reactor.core.publisher.Flux;
 
 import java.util.Objects;
 import java.util.Set;
@@ -29,8 +27,8 @@ public final class TrainController {
         return this.service.getStations();
     }
 
-    @SubscriptionMapping
-    public Flux<Set<Train>> getTrains(@Argument int stationId) {
+    @QueryMapping
+    public Set<Train> getTrains(@Argument int stationId) {
         return this.service.getTrains(stationId);
     }
 
