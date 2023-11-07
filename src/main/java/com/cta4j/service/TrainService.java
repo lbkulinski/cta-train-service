@@ -162,7 +162,7 @@ public final class TrainService {
             return Flux.error(exception);
         }
 
-        Duration period = Duration.ofMinutes(1L);
+        Duration period = Duration.ofSeconds(30L);
 
         return Flux.interval(Duration.ZERO, period)
                    .flatMap(i -> this.trainClient.getTrains(stationId))
