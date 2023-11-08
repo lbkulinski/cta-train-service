@@ -12,9 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.execution.ErrorType;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -78,8 +76,7 @@ public final class TrainService {
         TrainResponse response;
 
         try {
-            response = this.trainClient.getTrains(stationId)
-                                       .block();
+            response = this.trainClient.getTrains(stationId);
         } catch (Exception e) {
             this.rollbar.error(e);
 
@@ -151,22 +148,5 @@ public final class TrainService {
         }
 
         return Set.copyOf(trains);
-    }
-
-    public Flux<Set<Train>> subscribeToNewTrains(int stationId) {
-        if (stationId <= 0) {
-            String message = "The specified station ID must be positive";
-
-            DataFetcherException exception = new DataFetcherException(message, ErrorType.BAD_REQUEST);
-
-            return Flux.error(exception);
-        }
-
-        Duration period = Duration.ofMinutes(1L);
-
-        return Flux.interval(Duration.ZERO, period)
-                   .flatMap(i -> this.trainClient.getTrains(stationId))
-                   .mapNotNull(TrainResponse::body)
-                   .mapNotNull(TrainBody::trains);
     }
 }
