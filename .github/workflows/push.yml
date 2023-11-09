@@ -1,4 +1,4 @@
-name: CTA Experiments CI
+name: CTA Train Service CI
 on:
   push:
     branches: [ "main" ]

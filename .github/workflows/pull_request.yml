@@ -1,4 +1,4 @@
-name: CTA Experiments PR CI
+name: CTA Train Service PR CI
 on:
   pull_request_target:
     branches: [ "main" ]
