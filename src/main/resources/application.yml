@@ -11,6 +11,8 @@ spring:
       allowed-origins:
         - https://studio.apollographql.com #remove if you are not using Apollo Studio
         - ${FRONT_END_URL}
+    websocket:
+      path: /subscriptions
 cta:
   train-api-key: ${TRAIN_API_KEY}
 rollbar:
