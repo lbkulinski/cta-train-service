@@ -4,8 +4,8 @@ import com.cta4j.client.TrainClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.support.WebClientAdapter;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
 import java.util.Objects;
@@ -19,13 +19,11 @@ public class HttpClientConfiguration {
         String baseUrl = """
         https://lapi.transitchicago.com/api/1.0?key=%s&outputType=json""".formatted(apiKey);
 
-        WebClient webClient = WebClient.builder()
-                                       .baseUrl(baseUrl)
-                                       .build();
+        RestClient restClient = RestClient.create(baseUrl);
 
-        WebClientAdapter webClientAdapter = WebClientAdapter.forClient(webClient);
+        RestClientAdapter restClientAdapter = RestClientAdapter.create(restClient);
 
-        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory.builder(webClientAdapter)
+        HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory.builderFor(restClientAdapter)
                                                                                  .build();
 
         return httpServiceProxyFactory.createClient(TrainClient.class);
