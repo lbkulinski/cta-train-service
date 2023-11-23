@@ -164,7 +164,7 @@ public final class TrainService {
 
         Duration duration = Duration.ofSeconds(30L);
 
-        return Flux.interval(duration)
+        return Flux.interval(Duration.ZERO, duration)
                    .flatMap(tick -> this.trainClient.getTrains(stationId))
                    .map(TrainResponse::body)
                    .map(TrainBody::trains);
