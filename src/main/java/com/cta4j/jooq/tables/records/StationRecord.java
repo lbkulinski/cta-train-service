@@ -22,28 +22,28 @@ public class StationRecord extends UpdatableRecordImpl<StationRecord> implements
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>public.station.id</code>.
+     * Setter for <code>cta4j.station.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>public.station.id</code>.
+     * Getter for <code>cta4j.station.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>public.station.name</code>.
+     * Setter for <code>cta4j.station.name</code>.
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.station.name</code>.
+     * Getter for <code>cta4j.station.name</code>.
      */
     public String getName() {
         return (String) get(1);

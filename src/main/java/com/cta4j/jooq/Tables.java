@@ -4,35 +4,17 @@
 package com.cta4j.jooq;
 
 
-import com.cta4j.jooq.tables.Route;
-import com.cta4j.jooq.tables.RouteDirection;
-import com.cta4j.jooq.tables.RouteStop;
 import com.cta4j.jooq.tables.Station;
 
 
 /**
- * Convenience access to all tables in public.
+ * Convenience access to all tables in cta4j.
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
 
     /**
-     * The table <code>public.route</code>.
-     */
-    public static final Route ROUTE = Route.ROUTE;
-
-    /**
-     * The table <code>public.route_direction</code>.
-     */
-    public static final RouteDirection ROUTE_DIRECTION = RouteDirection.ROUTE_DIRECTION;
-
-    /**
-     * The table <code>public.route_stop</code>.
-     */
-    public static final RouteStop ROUTE_STOP = RouteStop.ROUTE_STOP;
-
-    /**
-     * The table <code>public.station</code>.
+     * The table <code>cta4j.station</code>.
      */
     public static final Station STATION = Station.STATION;
 }
