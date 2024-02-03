@@ -4,8 +4,8 @@
 package com.cta4j.jooq.tables;
 
 
+import com.cta4j.jooq.Cta4j;
 import com.cta4j.jooq.Keys;
-import com.cta4j.jooq.Public;
 import com.cta4j.jooq.tables.records.StationRecord;
 
 import java.util.function.Function;
@@ -37,7 +37,7 @@ public class Station extends TableImpl<StationRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The reference instance of <code>public.station</code>
+     * The reference instance of <code>cta4j.station</code>
      */
     public static final Station STATION = new Station();
 
@@ -50,12 +50,12 @@ public class Station extends TableImpl<StationRecord> {
     }
 
     /**
-     * The column <code>public.station.id</code>.
+     * The column <code>cta4j.station.id</code>.
      */
     public final TableField<StationRecord, Integer> ID = createField(DSL.name("id"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>public.station.name</code>.
+     * The column <code>cta4j.station.name</code>.
      */
     public final TableField<StationRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
@@ -68,21 +68,21 @@ public class Station extends TableImpl<StationRecord> {
     }
 
     /**
-     * Create an aliased <code>public.station</code> table reference
+     * Create an aliased <code>cta4j.station</code> table reference
      */
     public Station(String alias) {
         this(DSL.name(alias), STATION);
     }
 
     /**
-     * Create an aliased <code>public.station</code> table reference
+     * Create an aliased <code>cta4j.station</code> table reference
      */
     public Station(Name alias) {
         this(alias, STATION);
     }
 
     /**
-     * Create a <code>public.station</code> table reference
+     * Create a <code>cta4j.station</code> table reference
      */
     public Station() {
         this(DSL.name("station"), null);
@@ -94,12 +94,12 @@ public class Station extends TableImpl<StationRecord> {
 
     @Override
     public Schema getSchema() {
-        return aliased() ? null : Public.PUBLIC;
+        return aliased() ? null : Cta4j.CTA4J;
     }
 
     @Override
     public UniqueKey<StationRecord> getPrimaryKey() {
-        return Keys.STATION_PKEY;
+        return Keys.KEY_STATION_PRIMARY;
     }
 
     @Override
