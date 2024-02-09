@@ -100,9 +100,11 @@ public final class TrainService {
         Set<Train> trains = body.trains();
 
         if (trains == null) {
-            String message = "Trains with the specified station ID could not be found";
+            String message = "Trains with the station ID %d could not found".formatted(stationId);
 
-            throw new DataFetcherException(message, ErrorType.NOT_FOUND);
+            this.rollbar.info(message);
+
+            return Set.of();
         }
 
         return Set.copyOf(trains);
@@ -142,9 +144,11 @@ public final class TrainService {
         Set<Train> trains = body.trains();
 
         if (trains == null) {
-            String message = "A train with the specified run could not be found";
+            String message = "A train with the run number %d could not found".formatted(run);
 
-            throw new DataFetcherException(message, ErrorType.NOT_FOUND);
+            this.rollbar.info(message);
+
+            return Set.of();
         }
 
         return Set.copyOf(trains);
