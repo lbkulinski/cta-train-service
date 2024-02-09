@@ -144,7 +144,7 @@ public final class TrainService {
         Set<Train> trains = body.trains();
 
         if (trains == null) {
-            String message = "Trains with the run number %d could not found".formatted(run);
+            String message = "A train with the run number %d could not found".formatted(run);
 
             this.rollbar.info(message);
 
