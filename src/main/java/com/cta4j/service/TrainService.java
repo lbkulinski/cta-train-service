@@ -100,6 +100,10 @@ public final class TrainService {
         Set<Train> trains = body.trains();
 
         if (trains == null) {
+            String message = "Trains with the station ID %d could not found".formatted(stationId);
+
+            this.rollbar.info(message);
+
             return Set.of();
         }
 
@@ -140,6 +144,10 @@ public final class TrainService {
         Set<Train> trains = body.trains();
 
         if (trains == null) {
+            String message = "Trains with the run number %d could not found".formatted(run);
+
+            this.rollbar.info(message);
+
             return Set.of();
         }
 
